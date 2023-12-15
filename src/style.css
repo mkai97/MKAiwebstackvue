@@ -36,9 +36,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
 }
 
@@ -85,4 +82,10 @@ button:focus-visible {
   box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.8);
   /* 添加投影效果 */
 
+}
+
+.grid-content{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0,0.7);
 }

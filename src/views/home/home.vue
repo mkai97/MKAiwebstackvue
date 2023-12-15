@@ -1,8 +1,8 @@
 <template>
-  <div class="common-layout">
+  <div>
     <el-container>
       <backgroundVideo />
-      <el-aside class="boxShadow asideBar" width="200px">
+      <el-aside class="boxShadow" :style="{ '--el-aside-width': '200px' }">
         <sideBar></sideBar>
       </el-aside>
       <el-container>
@@ -15,6 +15,7 @@
       </el-container>
     </el-container>
   </div>
+  
 </template>
 
 <script setup>
@@ -22,12 +23,8 @@ import sideBar from "@/components/sideBar/index.vue";
 import searchArea from "@/components/searchArea/index.vue";
 import customModuleArea from "@/components/customModuleArea/index.vue";
 import backgroundVideo from "@/components/Background/backgroundVideo/backgroundVideo.vue";
-
 </script>
 <style lang="scss" scoped>
-.common-layout{
-  position: relative;
-}
 .layout {
   display: flex;
   flex-direction: row;

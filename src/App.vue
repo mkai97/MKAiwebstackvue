@@ -13,10 +13,12 @@ genID();
 
 <template>
   <el-config-provider :size="size" :z-index="zIndex">
-   <home></home>
+  <router-view></router-view>
   </el-config-provider>
 </template>
 
 <style scoped>
+@import url("./style.css");
+
  
 </style>

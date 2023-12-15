@@ -3,6 +3,9 @@ import './style.css'
 import App from './App.vue'
 import store from './store'
 
+import router from './router/index'
+
+
 import Modal from './components/mkModal/index.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
@@ -17,5 +20,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   
 
 app.use(store); // 挂载pina
+
+app.use(router);
 
 app.mount('#app')

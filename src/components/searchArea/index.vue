@@ -1,7 +1,10 @@
 <template>
-<div class="searchArea">
-    searchArea
-</div>
+<el-row>
+    <el-col :span="24">
+        <div class="grid-content searchArea" ></div>
+
+    </el-col>
+  </el-row>
   
 </template>
 
