@@ -4,7 +4,7 @@
       <cveItem v-for="item in list" :key="item.id" :item="item"></cveItem>
     </div>
 
-    <div v-loading="iptLoading" class="iptbox">
+    <div v-loading="iptboxLoading" class="iptbox">
       <el-input
         style="width: 740px"
         type="textarea"
@@ -27,8 +27,8 @@ import chatapi from "@/http/api";
 
 const textarea = ref("");
 const list = ref([]);
-list.value = JSON.parse(localStorage.getItem("chatList")) || [];
-const iptLoading = ref(false);
+list.value = JSON.parse(localStorage.getItem("kbchatList")) || [];
+const iptboxLoading = ref(false);
 
 const scrollToTarget = (domID) => {
   const itemListElement = document.getElementById("itemList");
@@ -61,14 +61,15 @@ const getChatHis = (limit = 3) => {
     );
   }
 };
+
 function handleKeyDown(event) {
   if (event.shiftKey) {
-        // 如果按下了Shift键，则进行换行处理
-        textarea.value += '\n';
-      } else {
-        // 否则，按下回车键发送消息
-        sendMsg();
-      }
+    // 如果按下了Shift键，则进行换行处理
+    textarea.value += "\n";
+  } else {
+    // 否则，按下回车键发送消息
+    sendMsg();
+  }
 }
 
 function sendMsg() {
@@ -82,10 +83,9 @@ function sendMsg() {
   list.value.push(msgBody);
   scrollToTarget(list.value[list.value.length - 1].msg_id);
 
-  iptLoading.value = true;
-
+  iptboxLoading.value = true;
   chatapi
-    .chat_Send(
+    .KBchat_Send(
       {
         query: msgBody.content,
         conversation_id: msgBody.msg_id,
@@ -97,13 +97,14 @@ function sendMsg() {
           content: Event.responseText,
           time: new Date().toLocaleString(),
           isSelf: false,
-          isLoading: true,
+          docs: [],
         };
 
         console.log(Event, "Event");
         if (list.value[list.value.length - 1].msg_id == Event.message_id) {
           list.value[list.value.length - 1].content = Event.responseText;
-          localStorage.setItem("chatList", JSON.stringify(list.value));
+          list.value[list.value.length - 1].docs = Event?.docs;
+          localStorage.setItem("kbchatList", JSON.stringify(list.value));
           scrollToTarget(list.value[list.value.length - 1].msg_id);
         } else {
           list.value.push(msgBody);
@@ -113,11 +114,12 @@ function sendMsg() {
       }
     )
     .then((res) => {
-      list.value[list.value.length - 1].isLoading = false;
-      iptLoading.value = false;
+      iptboxLoading.value = false;
+      list.value = JSON.parse(localStorage.getItem("kbchatList")) || [];
+
     })
     .catch((err) => {
-      iptLoading.value = false;
+      iptboxLoading.value = false;
       console.log(err);
     });
 }
